@@ -9,4 +9,4 @@
 # Puppet apply the puppetmaster manifest
 - command: > 
     puppet apply --modulepath='/opt/git/system-config/modules:/etc/puppet/modules' 
-    -e 'class {"openstack_project::puppetmaster"':' puppetdb_server => "{{ hostvars[groups['puppetdb'][0]]['openstack']['name'] }}" }'
+    -e 'class {"openstack_project::puppetmaster"':' puppetdb_server => "{{ puppetdb_server }}" }'
