@@ -1,0 +1,19 @@
+- name: Create OpenStack instances
+  os_server:
+    state: present
+    cloud: openstack
+    name: "{{ item.name }}"
+    region_name: region-b.geo-1
+    availability_zone: az2
+    image: "{{ item.image }}"
+    key_name: workstation
+    timeout: 200
+    flavor: "{{ item.flavor }}"
+    nics:
+      - net-name: "{{ item.net_name }}"
+    security_groups: default
+    auto_floating_ip: yes
+    meta: 
+      group: infra
+      node_type: "{{ item.node_type }}"
+  with_items: instances_config

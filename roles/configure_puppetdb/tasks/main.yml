@@ -1,0 +1,3 @@
+---
+# Puppet apply the puppetdb manifest
+- command: puppet apply --modulepath='/opt/git/system-config/modules:/etc/puppet/modules' -e 'include openstack_project::puppetdb'

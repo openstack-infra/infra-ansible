@@ -1,0 +1,6 @@
+---
+# file: provision.yml
+- hosts: localhost
+  connection: local
+  roles:
+    - { role: create_openstack_instances }

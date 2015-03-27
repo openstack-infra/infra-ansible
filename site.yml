@@ -1,0 +1,8 @@
+---
+# file: site.yml
+- include: provision
+- include: puppetdb
+- include: puppetmaster
+- include: jenkins
+- include: gerrit
+- include: nodepool
