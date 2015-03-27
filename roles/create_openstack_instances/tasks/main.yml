@@ -15,5 +15,5 @@
     auto_floating_ip: yes
     meta: 
       group: infra
-      node_type: "{{ item.node_type }}"
-  with_items: instances_config
+      infra_type: "{{ item.infra_type }}"
+  with_items: infra_config
