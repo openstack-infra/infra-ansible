@@ -1,0 +1,24 @@
+---
+# file: bootstrap.yml
+- hosts: infra
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: set_hostnames }
+
+- hosts: meta-infra_type_puppetmaster
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: common }
+    - { role: configure_puppetmaster }
+    - { role: generate_puppet_certificates }
+
+- hosts: meta-infra_type_puppetdb
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: common }
+    - { role: configure_puppetdb }
+
+#    - { role: deploy_hiera }
