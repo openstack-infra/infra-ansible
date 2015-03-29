@@ -1,9 +1,0 @@
----
-# file: puppetdb.yml
-
-- hosts: puppetdb
-  user: ubuntu
-  sudo: yes
-  roles:
-    - { role: common }
-    - { role: configure_puppetdb }
