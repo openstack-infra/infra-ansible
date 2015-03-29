@@ -1,0 +1,15 @@
+---
+# Set hostname and /etc/hosts 
+# Inspired by: 
+# https://github.com/ansible/ansible/pull/8482)
+# https://gist.github.com/rothgar/8793800
+- hostname: name="{{ inventory_hostname.split('.', 1)[0] }}"
+
+# " lovely lonely double-quote for fixing vim highlighting
+
+- name: Add all infra hosts to /etc/hosts
+  lineinfile: dest=/etc/hosts
+              line='{{ hostvars[item].ansible_default_ipv4.address }} {{ item }} {{ item.split('.', 1)[0] }}'
+              insertafter='^127\.0\.0\.1'
+              state=present
+  with_items: groups['infra']
