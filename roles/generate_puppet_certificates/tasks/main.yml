@@ -1,0 +1,7 @@
+---
+# Generate puppet certificates for infra servers 
+- name:  Generate puppet certificates for infra servers
+  command: > 
+    puppet cert generate "{{ item }}"
+  when: item != inventory_hostname
+  with_items: groups['infra']
