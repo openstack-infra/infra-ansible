@@ -1,0 +1,6 @@
+---
+# Update packages
+- apt: update_cache=yes
+
+# Install git
+- apt: name=git

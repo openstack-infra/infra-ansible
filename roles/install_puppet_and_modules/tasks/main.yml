@@ -1,0 +1,8 @@
+---
+# Install puppet
+- command: bash /opt/system-config/production/install_puppet.sh
+  tags: install_puppet
+
+# Install puppet modules
+- command: bash /opt/system-config/production/install_modules.sh
+  tags: install_puppet_modules
