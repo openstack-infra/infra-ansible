@@ -12,6 +12,7 @@
   roles:
     - { role: install_required_packages }
     - { role: clone_system_config }
+    - { role: branch_system_config }
     - { role: install_puppet_and_modules }
     - { role: configure_puppetmaster }
     - { role: generate_puppet_certificates }
