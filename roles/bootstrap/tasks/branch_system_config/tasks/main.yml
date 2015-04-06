@@ -1,0 +1,26 @@
+---
+# Check checked-out branch
+- command: git rev-parse --abbrev-ref HEAD
+  args:
+    chdir: /opt/system-config/production
+  register: checked_out_branch
+  ignore_errors: True
+
+# Check whether "infra_config" branch exists or not
+- command: git show-ref "infra_config"
+  args:
+    chdir: /opt/system-config/production
+  register: infra_config_branch 
+  ignore_errors: True
+
+# If "infra_config" branch exists, switch to it
+- command: git checkout infra_config
+  args:
+    chdir: /opt/system-config/production
+  when: checked_out_branch.stdout != "infra_config" and infra_config_branch.rc == 0
+
+# Create and switch to "infra_config" branch to put non-upstream fixes and values
+- command: git checkout -b infra_config
+  args:
+    chdir: /opt/system-config/production
+  when: infra_config_branch.rc != 0
