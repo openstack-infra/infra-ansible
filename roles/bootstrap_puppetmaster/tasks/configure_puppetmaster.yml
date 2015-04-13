@@ -13,3 +13,7 @@
     puppetmaster_server => "{{ inventory_hostname }}",
     puppetdb => false }'
   tags: puppet_apply
+
+- service: name=puppet state=started
+
+- command: puppet agent --test
