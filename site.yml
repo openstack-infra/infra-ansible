@@ -1,6 +1,7 @@
 ---
 # file: site.yml
 - include: provision_infra_servers.yml
+- include: common.yml
 - include: set_hostnames.yml
 - include: deploy_site_pp.yml
 - include: deploy_hiera.yml
