@@ -1,5 +1,4 @@
 ---
 - include: install_required_packages.yml
-- include: clone_system_config.yml
-- include: install_puppet_and_modules.yml
+- include: install_puppet_modules.yml
 - include: configure_puppetmaster.yml
