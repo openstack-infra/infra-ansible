@@ -1,0 +1,7 @@
+---
+# file: bootstrap_puppetmaster.yml
+- hosts: meta-infra_type_puppetmaster
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: bootstrap_puppetmaster }

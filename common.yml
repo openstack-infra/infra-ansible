@@ -1,0 +1,7 @@
+---
+# file: set_hostnames.yml
+- hosts: infra
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: common }

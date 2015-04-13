@@ -1,9 +1,0 @@
----
-# Generate puppet certificates for infra servers 
-- name:  Generate puppet certificates for infra servers
-  command: puppet cert generate "{{ item }}" 
-  args:
-    creates: "/var/lib/puppet/ssl/certs/{{ item }}.pem"
-  when: item != inventory_hostname
-  with_items: groups['infra']
-  tags: generate_puppet_certificates

@@ -10,6 +10,11 @@ infra_servers:
     flavor: standard.small
     net_name: infra-test-network
     infra_type: puppetmaster
+  - name: zuul.infra.test.rcarrillocruz.cloud
+    image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
+    flavor: standard.small
+    net_name: infra-test-network
+    infra_type: zuul
   - name: jenkins.infra.test.rcarrillocruz.cloud
     image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
     flavor: standard.small

@@ -1,3 +1,4 @@
+---
 - name: Create OpenStack instances
   os_server:
     state: present
@@ -16,4 +17,4 @@
     meta: 
       group: infra
       infra_type: "{{ item.infra_type }}"
-  with_items: infra_config
+  with_items: infra_servers

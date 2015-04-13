@@ -1,7 +1,10 @@
 ---
 # file: site.yml
-- include: provision.yml
-- include: bootstrap.yml
-#- include: gerrit
-#- include: jenkins
-#- include: nodepool
+- include: provision_infra_servers.yml
+- include: set_hostnames.yml
+- include: deploy_site_pp.yml
+- include: deploy_hiera.yml
+- include: bootstrap_puppetmaster.yml
+- include: bootstrap_puppet_infra_nodes.yml
+- include: sign_infra_nodes_certs.yml
+- include: run_puppet_infra_nodes.yml

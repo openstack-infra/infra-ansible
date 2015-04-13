@@ -1,0 +1,7 @@
+---
+# file: deploy_hiera.yml
+- hosts: meta-infra_type_puppetmaster
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: deploy_hiera }

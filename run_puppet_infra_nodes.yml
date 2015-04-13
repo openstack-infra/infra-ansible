@@ -1,0 +1,7 @@
+---
+# file: run_puppet_infra_nodes
+- hosts: infra:!meta-infra_type_puppetmaster
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: run_puppet_infra_nodes }

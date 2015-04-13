@@ -1,0 +1,6 @@
+---
+# file: deploy_site_pp.yml
+- hosts: localhost
+  connection: local
+  roles:
+    - { role: deploy_site_pp }

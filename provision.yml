@@ -1,6 +1,0 @@
----
-# file: provision.yml
-- hosts: localhost
-  connection: local
-  roles:
-    - { role: provision }

@@ -1,0 +1,2 @@
+---
+- file: path=/tmp/infra-ansible state=directory

@@ -1,0 +1,6 @@
+---
+# file: provision_infra_servers.yml
+- hosts: localhost
+  connection: local
+  roles:
+    - { role: provision_infra_servers }

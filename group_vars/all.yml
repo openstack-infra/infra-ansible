@@ -1,0 +1,4 @@
+---
+system_config_repo_url: git@github.com:rcarrillocruz/system-config.git 
+system_config_repo_https_url: https://github.com/rcarrillocruz/system-config.git
+system_config_branch: infra_config

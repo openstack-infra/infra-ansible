@@ -1,0 +1,15 @@
+---
+# Update apt cache
+- apt: update_cache=yes
+
+# Install python-paramiko
+- apt: name=python-paramiko
+
+- file: path=/etc/puppet/hieradata state=directory
+
+- file: path=/etc/puppet/hieradata/production state=directory
+
+- file: path=/etc/puppet/hieradata/production/fqdn state=directory
+
+# Generate hiera common.yaml values
+- script: generate_hiera_common.py creates=/etc/puppet/hieradata/production/common.yaml

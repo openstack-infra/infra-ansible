@@ -1,0 +1,13 @@
+---
+# Update packages
+- apt: update_cache=yes 
+
+# Install puppet
+- apt: name=puppet
+
+# Deploy puppet.conf template
+- template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
+
+# Run puppet agent to request certificate
+- command: puppet agent --test
+  ignore_errors: True
