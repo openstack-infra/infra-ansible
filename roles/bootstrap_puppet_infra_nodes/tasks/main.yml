@@ -2,8 +2,14 @@
 # Update packages
 - apt: update_cache=yes 
 
+# Download install_puppet.sh from system-config
+- get_url: 
+    url=https://git.openstack.org/cgit/openstack-infra/system-config/plain/install_puppet.sh
+    dest=/tmp/infra-ansible/install_puppet.sh
+
 # Install puppet
-- apt: name=puppet
+- command: bash /tmp/infra-ansible/install_puppet.sh
+  tags: install_puppet
 
 # Deploy puppet.conf template
 - template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
