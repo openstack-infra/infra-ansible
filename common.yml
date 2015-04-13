@@ -1,5 +1,5 @@
 ---
-# file: set_hostnames.yml
+# file: common.yml
 - hosts: infra
   user: ubuntu
   sudo: true
