@@ -1,5 +1,3 @@
 ---
-- command: puppet agent --enable
-
 - command: puppet agent --test
   ignore_errors: True
