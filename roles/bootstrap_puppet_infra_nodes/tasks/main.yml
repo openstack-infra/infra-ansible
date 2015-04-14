@@ -5,14 +5,17 @@
 # Download install_puppet.sh from system-config
 - get_url: 
     url=https://git.openstack.org/cgit/openstack-infra/system-config/plain/install_puppet.sh
-    dest=/tmp/infra-ansible/install_puppet.sh
+    dest=/tmp/install_puppet.sh
 
 # Install puppet
-- command: bash /tmp/infra-ansible/install_puppet.sh
+- command: bash -x /tmp/install_puppet.sh
   tags: install_puppet
 
 # Deploy puppet.conf template
 - template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
+
+# Set puppet service running
+- service: name=puppet enabled=yes state=started
 
 # Run puppet agent to request certificate
 - command: puppet agent --test
