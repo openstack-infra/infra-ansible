@@ -1,0 +1,32 @@
+---
+infra_servers:
+  - name: puppetmaster.yourdomain.cloud
+    image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
+    flavor: standard.small
+    net_name: your_neutron_network
+    security_groups: default
+    infra_type: puppetmaster
+  - name: zuul.yourdomain.cloud
+    image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
+    flavor: standard.small
+    net_name: your_neutron_network
+    security_groups: default
+    infra_type: zuul
+  - name: jenkins.yourdomain.cloud
+    image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
+    flavor: standard.medium
+    net_name: your_neutron_network
+    security_groups: "default,webserver"
+    infra_type: jenkins
+  - name: gerrit.yourdomain.cloud
+    image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
+    flavor: standard.large
+    net_name: your_neutron_network
+    security_groups: "default,webserver"
+    infra_type: gerrit
+  - name: nodepool.yourdomain.cloud
+    image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
+    flavor: standard.small
+    net_name: your_neutron_network
+    security_groups: default
+    infra_type: nodepool
