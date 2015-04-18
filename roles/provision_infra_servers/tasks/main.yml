@@ -12,7 +12,7 @@
     flavor: "{{ item.flavor }}"
     nics:
       - net-name: "{{ item.net_name }}"
-    security_groups: default
+    security_groups: "{{ item.security_groups }}"
     auto_floating_ip: yes
     meta: 
       group: infra
