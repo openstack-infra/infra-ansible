@@ -7,7 +7,7 @@
     region_name: region-b.geo-1
     availability_zone: az2
     image: "{{ item.image }}"
-    key_name: workstation
+    key_name: "{{ key_name }}"
     timeout: 200
     flavor: "{{ item.flavor }}"
     nics:
