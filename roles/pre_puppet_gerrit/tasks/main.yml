@@ -1,0 +1,16 @@
+---
+- command: hiera -c /etc/puppet/hiera.yaml gerrit_mysql_password environment=production
+  delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
+  register: gerrit_mysql_password
+  no_log: True
+
+- apt: name=mysql-server state=present
+
+- apt: name=python-mysqldb state=present
+
+- mysql_db: name=reviewdb state=present
+
+- service: name=mysql state=running enabled=yes
+
+- mysql_user: user=gerrit2 password="{{ gerrit_mysql_password.stdout }}" priv=*.*:ALL,GRANT state=present
+  no_log: True

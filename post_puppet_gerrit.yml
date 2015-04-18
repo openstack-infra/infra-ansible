@@ -1,0 +1,7 @@
+---
+# file: post_puppet_gerrit.yml
+- hosts: meta-infra_type_gerrit
+  user: ubuntu
+  sudo: true
+  roles:
+    - { role: post_puppet_gerrit }
