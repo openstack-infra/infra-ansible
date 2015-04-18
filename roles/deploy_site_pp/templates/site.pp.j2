@@ -18,26 +18,28 @@ node default {
 #
 # Long lived servers:
 #
-node 'review-dev.openstack.org' {
-  class { 'openstack_project::review_dev':
+node '{{ groups['meta-infra_type_gerrit'][0] }}' {
+  class { 'openstack_project::review':
     project_config_repo             => 'https://git.openstack.org/openstack-infra/project-config',
-    github_oauth_token              => hiera('gerrit_dev_github_token', 'XXX'),
-    github_project_username         => hiera('github_dev_project_username', 'username'),
-    github_project_password         => hiera('github_dev_project_password', 'XXX'),
-    mysql_host                      => hiera('gerrit_dev_mysql_host', 'localhost'),
-    mysql_password                  => hiera('gerrit_dev_mysql_password', 'XXX'),
-    email_private_key               => hiera('gerrit_dev_email_private_key', 'XXX'),
-    contactstore_appsec             => hiera('gerrit_dev_contactstore_appsec', 'XXX'),
-    contactstore_pubkey             => hiera('gerrit_dev_contactstore_pubkey', 'XXX'),
-    ssh_dsa_key_contents            => hiera('gerrit_dev_ssh_dsa_key_contents', 'XXX'),
-    ssh_dsa_pubkey_contents         => hiera('gerrit_dev_ssh_dsa_pubkey_contents', 'XXX'),
-    ssh_rsa_key_contents            => hiera('gerrit_dev_ssh_rsa_key_contents', 'XXX'),
-    ssh_rsa_pubkey_contents         => hiera('gerrit_dev_ssh_rsa_pubkey_contents', 'XXX'),
-    ssh_project_rsa_key_contents    => hiera('gerrit_dev_project_ssh_rsa_key_contents', 'XXX'),
-    ssh_project_rsa_pubkey_contents => hiera('gerrit_dev_project_ssh_rsa_pubkey_contents', 'XXX'),
-    lp_sync_consumer_key            => hiera('gerrit_dev_lp_consumer_key', 'XXX'),
-    lp_sync_token                   => hiera('gerrit_dev_lp_access_token', 'XXX'),
-    lp_sync_secret                  => hiera('gerrit_dev_lp_access_secret', 'XXX'),
+    ssl_cert_file                   => '/etc/ssl/certs/ssl-cert-snakeoil.pem',
+    ssl_key_file                    => '/etc/ssl/private/ssl-cert-snakeoil.key',
+    ssl_chain_file                  => '',
+#    github_oauth_token              => hiera('gerrit_github_token', 'XXX'),
+#    github_project_username         => hiera('github_project_username', 'username'),
+#    github_project_password         => hiera('github_project_password', 'XXX'),
+    mysql_host                      => hiera('gerrit_mysql_host', 'localhost'),
+    mysql_password                  => hiera('gerrit_mysql_password', 'XXX'),
+    email_private_key               => hiera('gerrit_email_private_key', 'XXX'),
+    contactstore                    => false,
+#    contactstore_appsec             => hiera('gerrit_contactstore_appsec', 'XXX'),
+#    contactstore_pubkey             => hiera('gerrit_contactstore_pubkey', 'XXX'),
+    ssh_rsa_key_contents            => hiera('gerrit_ssh_rsa_key_contents', 'XXX'),
+    ssh_rsa_pubkey_contents         => hiera('gerrit_ssh_rsa_pubkey_contents', 'XXX'),
+    ssh_project_rsa_key_contents    => hiera('gerrit_project_ssh_rsa_key_contents', 'XXX'),
+    ssh_project_rsa_pubkey_contents => hiera('gerrit_project_ssh_rsa_pubkey_contents', 'XXX'),
+#    lp_sync_consumer_key            => hiera('gerrit_lp_consumer_key', 'XXX'),
+#    lp_sync_token                   => hiera('gerrit_lp_access_token', 'XXX'),
+#    lp_sync_secret                  => hiera('gerrit_lp_access_secret', 'XXX'),
     sysadmins                       => hiera('sysadmins', []),
   }
 }
@@ -107,43 +109,20 @@ node /^zm\d+\.openstack\.org$/ {
   }
 }
 
-node 'zuul-dev.openstack.org' {
-  class { 'openstack_project::zuul_dev':
+node '{{ groups['meta-infra_type_zuul'][0] }}' {
+  class { 'openstack_project::zuul_prod':
     project_config_repo  => 'https://git.openstack.org/openstack-infra/project-config',
-    gerrit_server        => 'review-dev.openstack.org',
+    gerrit_server        => '{{ groups['meta-infra_type_gerrit'][0]}} ',
     gerrit_user          => 'jenkins',
-    gerrit_ssh_host_key  => hiera('gerrit_dev_ssh_rsa_pubkey_contents', 'XXX'),
-    zuul_ssh_private_key => hiera('zuul_dev_ssh_private_key_contents', 'XXX'),
+    gerrit_ssh_host_key  => hiera('gerrit_ssh_rsa_pubkey_contents', 'XXX'),
+    zuul_ssh_private_key => hiera('zuul_ssh_private_key_contents', 'XXX'),
     url_pattern          => 'http://logs.openstack.org/{build.parameters[LOG_PATH]}',
-    zuul_url             => 'http://zuul-dev.openstack.org/p',
+    zuul_url             => 'http://{{ groups['meta-infra_type_zuul'][0] }}/p',
     sysadmins            => hiera('sysadmins', []),
-    statsd_host          => 'graphite.openstack.org',
+    statsd_host          => '',
     gearman_workers      => [
-      'jenkins.openstack.org',
-      'jenkins01.openstack.org',
-      'jenkins02.openstack.org',
-      'jenkins03.openstack.org',
-      'jenkins04.openstack.org',
-      'jenkins05.openstack.org',
-      'jenkins06.openstack.org',
-      'jenkins07.openstack.org',
-      'jenkins-dev.openstack.org',
+      '{{ groups['meta-infra_type_jenkins'][0] }}',
     ],
-  }
-}
-
-node 'pypi.slave.openstack.org' {
-  include openstack_project
-  class { 'openstack_project::pypi_slave':
-    pypi_username          => 'openstackci',
-    pypi_password          => hiera('pypi_password', 'XXX'),
-    jenkins_ssh_public_key => $openstack_project::jenkins_ssh_key,
-    jenkinsci_username     => hiera('jenkins_ci_org_user', 'username'),
-    jenkinsci_password     => hiera('jenkins_ci_org_password', 'XXX'),
-    mavencentral_username  => hiera('mavencentral_org_user', 'username'),
-    mavencentral_password  => hiera('mavencentral_org_password', 'XXX'),
-    puppet_forge_username  => hiera('puppet_forge_username', 'username'),
-    puppet_forge_password  => hiera('puppet_forge_password', 'XXX'),
   }
 }
 
