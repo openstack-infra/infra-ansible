@@ -1,4 +1,5 @@
 ---
+key_name: your_openstack_key
 infra_servers:
   - name: puppetmaster.yourdomain.cloud
     image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
