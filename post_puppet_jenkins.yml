@@ -1,5 +1,5 @@
 ---
-# file: bootstrap_puppetmaster.yml
+# file: post_puppet_jenkins.yml
 - hosts: meta-infra_type_jenkins
   user: ubuntu
   sudo: true
