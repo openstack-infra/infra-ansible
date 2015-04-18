@@ -15,3 +15,7 @@
   tags: puppet_apply
 
 - service: name=puppet enabled=yes state=started
+
+# Trigger a puppet agent --test to apply config from repo
+- command: puppet agent --test
+  ignore_errors: True
