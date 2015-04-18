@@ -12,4 +12,4 @@
 - file: path=/etc/puppet/hieradata/production/fqdn state=directory
 
 # Generate hiera common.yaml values
-- script: generate_hiera_common.py creates=/etc/puppet/hieradata/production/common.yaml
+- script: generate_hiera_common.py
