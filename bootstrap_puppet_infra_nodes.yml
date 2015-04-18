@@ -4,4 +4,4 @@
   user: ubuntu
   sudo: true
   roles:
-    - { role: bootstrap_puppet_infra_nodes }
+    - { role: bootstrap_puppet_infra_node }
