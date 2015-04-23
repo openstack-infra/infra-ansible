@@ -1,4 +1,6 @@
 ---
+system_config_repo_url: git@your_git_server/system-config.git
+system_config_repo_https_url: https://your_git_server/system-config.git
 key_name: your_openstack_key
 infra_servers:
   - name: puppetmaster.yourdomain.cloud
