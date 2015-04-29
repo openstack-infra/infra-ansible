@@ -9,13 +9,7 @@
 # Puppet apply the puppetmaster manifest
 - command: > 
     puppet apply --modulepath='/opt/system-config/production/modules:/etc/puppet/modules'
-    -e 'class {"openstack_project::puppetmaster"':' 
-    puppetmaster_server => "{{ inventory_hostname }}",
-    puppetdb => false }'
+    /opt/system-config/production/manifests/site.pp
   tags: puppet_apply
 
 - service: name=puppet enabled=yes state=started
-
-# Trigger a puppet agent --test to apply config from repo
-- command: puppet agent --test
-  ignore_errors: True
