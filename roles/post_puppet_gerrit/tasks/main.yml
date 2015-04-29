@@ -13,14 +13,14 @@
   delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
   register: zuul_ssh_public_key_contents
 
-- command: hiera -c /etc/puppet/hiera.yaml ssh_project_rsa_pubkey_contents environment=production
+- command: hiera -c /etc/puppet/hiera.yaml gerrit_ssh_project_rsa_pubkey_contents environment=production
   delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
-  register: ssh_project_rsa_pubkey_contents
+  register: gerrit_ssh_project_rsa_pubkey_contents
 
 - command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-group "'Project Bootstrappers'"
 
 - command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-group "'Continuous Integration Tools'"
 
-- command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --group Administrators --full-name "'Project Creator'" --email creator@infra-ansible.cloud --ssh-key "'{{ ssh_project_rsa_pubkey_contents.stdout }}'" openstack-project-creator
+- command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --group Administrators --full-name "'Project Creator'" --email creator@infra-ansible.cloud --ssh-key "'{{ gerrit_ssh_project_rsa_pubkey_contents.stdout }}'" openstack-project-creator
 
 - command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --full-name "'Zuul'" --email zuul@infra-ansible.cloud --ssh-key "'{{ zuul_ssh_public_key_contents.stdout }}'" jenkins
