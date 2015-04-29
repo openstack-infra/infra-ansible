@@ -3,7 +3,3 @@
   args:
     chdir: /tmp/infra-ansible/system-config/production
   ignore_errors: True
-
-- command: git push origin {{ system_config_branch }}
-  args:
-    chdir: /tmp/infra-ansible/system-config/production
