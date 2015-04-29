@@ -1,4 +1,4 @@
 ---
-- include: clone_system_config.yml
+- include: rsync_system_config.yml
 - include: install_puppet_and_modules.yml
 - include: configure_puppetmaster.yml

@@ -1,8 +1,0 @@
----
-# Clone system-config 
-- git: repo="{{ system_config_repo_https_url }}"
-       dest=/opt/system-config/production
-       accept_hostkey=True
-       version="{{ system_config_branch }}"
-       force=True
-  tags: clone_system_config
