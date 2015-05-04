@@ -13,11 +13,17 @@
   register: checked_out_branch
 
 - command: git show-ref --verify --quiet "{{ system_config_branch }}"
+  args:
+    chdir: /tmp/infra-ansible/system-config/production
   register: system_config_branch_exists
   ignore_errors: True
 
 - command: git checkout -b "{{ system_config_branch }}"
+  args:
+    chdir: /tmp/infra-ansible/system-config/production
   when: system_config_branch_exists|failed
 
 - command: git checkout "{{ system_config_branch }}"
+  args:
+    chdir: /tmp/infra-ansible/system-config/production
   when: system_config_branch_exists|success and checked_out_branch.stdout != "{{ system_config_branch }}"
