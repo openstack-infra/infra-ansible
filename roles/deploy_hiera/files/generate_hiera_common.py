@@ -11,7 +11,7 @@ HIERA_SSH_PARAMS = [('puppetmaster_root_rsa_key', 'puppetmaster_root_rsa_pub_key
                     ('jenkins_ssh_private_key', 'jenkins_ssh_public_key'),
                     ('zuul_ssh_private_key_contents', 'zuul_ssh_public_key_contents'),
                     ('gerrit_ssh_rsa_key_contents', 'gerrit_ssh_rsa_pubkey_contents'),
-                    ('gerrit_ssh_project_rsa_key_contents', 'gerrit_ssh_project_rsa_pubkey_contents')]
+                    ('gerrit_project_ssh_rsa_key_contents', 'gerrit_project_ssh_rsa_pubkey_contents')]
 HIERA_PASSWORD_PARAMS = ['jenkins_jobs_password', 'gerrit_mysql_password']
 HIERA_COMMON_YAML_FILE = '/etc/puppet/hieradata/production/common.yaml'
 
