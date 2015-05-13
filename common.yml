@@ -1,6 +1,7 @@
 ---
 # file: common.yml
 - hosts: infra
+  gather_facts: no
   user: ubuntu
   sudo: true
   roles:

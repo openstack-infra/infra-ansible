@@ -1,6 +1,7 @@
 ---
 # file: post_puppet_gerrit.yml
 - hosts: meta-infra_type_gerrit
+  gather_facts: no
   user: ubuntu
   sudo: true
   roles:

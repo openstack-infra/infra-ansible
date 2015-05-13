@@ -1,6 +1,7 @@
 ---
 # file: deploy_system_config.yml
 - hosts: localhost
+  gather_facts: no
   connection: local
   roles:
     - { role: deploy_system_config }

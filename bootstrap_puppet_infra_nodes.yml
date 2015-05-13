@@ -1,6 +1,7 @@
 ---
 # file: bootstrap_puppet_infra_nodes.yml
 - hosts: infra:!meta-infra_type_puppetmaster
+  gather_facts: no
   user: ubuntu
   sudo: true
   roles:
