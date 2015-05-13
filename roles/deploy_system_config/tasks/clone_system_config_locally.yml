@@ -12,7 +12,7 @@
     chdir: /tmp/infra-ansible/system-config/production
   register: checked_out_branch
 
-- command: git show-ref --verify --quiet "{{ system_config_branch }}"
+- command: git show-ref --verify --quiet refs/heads/"{{ system_config_branch }}"
   args:
     chdir: /tmp/infra-ansible/system-config/production
   register: system_config_branch_exists
