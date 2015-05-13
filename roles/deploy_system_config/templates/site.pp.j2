@@ -19,28 +19,42 @@ node default {
 # Long lived servers:
 #
 node '{{ groups['meta-infra_type_gerrit'][0] }}' {
-  class { 'openstack_project::review':
-    project_config_repo             => 'https://git.openstack.org/openstack-infra/project-config',
+  class { 'openstack_project::gerrit':
     ssl_cert_file                   => '/etc/ssl/certs/ssl-cert-snakeoil.pem',
     ssl_key_file                    => '/etc/ssl/private/ssl-cert-snakeoil.key',
     ssl_chain_file                  => '',
-#    github_oauth_token              => hiera('gerrit_github_token', 'XXX'),
-#    github_project_username         => hiera('github_project_username', 'username'),
-#    github_project_password         => hiera('github_project_password', 'XXX'),
     mysql_host                      => hiera('gerrit_mysql_host', 'localhost'),
     mysql_password                  => hiera('gerrit_mysql_password', 'XXX'),
     email_private_key               => hiera('gerrit_email_private_key', 'XXX'),
+    email                           => 'review@infra-ansible.cloud',
     contactstore                    => false,
-#    contactstore_appsec             => hiera('gerrit_contactstore_appsec', 'XXX'),
-#    contactstore_pubkey             => hiera('gerrit_contactstore_pubkey', 'XXX'),
     ssh_rsa_key_contents            => hiera('gerrit_ssh_rsa_key_contents', 'XXX'),
     ssh_rsa_pubkey_contents         => hiera('gerrit_ssh_rsa_pubkey_contents', 'XXX'),
     ssh_project_rsa_key_contents    => hiera('gerrit_project_ssh_rsa_key_contents', 'XXX'),
     ssh_project_rsa_pubkey_contents => hiera('gerrit_project_ssh_rsa_pubkey_contents', 'XXX'),
-#    lp_sync_consumer_key            => hiera('gerrit_lp_consumer_key', 'XXX'),
-#    lp_sync_token                   => hiera('gerrit_lp_access_token', 'XXX'),
-#    lp_sync_secret                  => hiera('gerrit_lp_access_secret', 'XXX'),
     sysadmins                       => hiera('sysadmins', []),
+    database_poollimit                  => '150',
+    container_heaplimit                 => '8g',
+    core_packedgitopenfiles             => '4096',
+    core_packedgitlimit                 => '400m',
+    core_packedgitwindowsize            => '16k',
+    sshd_threads                        => '100',
+    httpd_maxwait                       => '5000min',
+    war                             => 'http://tarballs.openstack.org/ci/gerrit/gerrit-v2.8.4.19.4548330.war',
+    testmode                        => true,
+    replication                     => [
+      {
+        name                 => 'local',
+        url                  => 'file:///opt/lib/git/',
+        replicationDelay     => '1',
+        threads              => '4',
+        mirror               => true,
+      },
+    ],
+  }
+
+  class { 'project_config':
+    url => 'https://git.openstack.org/openstack-infra/project-config',
   }
 }
 
