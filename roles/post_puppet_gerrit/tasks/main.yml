@@ -21,6 +21,6 @@
 
 - command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-group "'Continuous Integration Tools'"
 
-- command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --group Administrators --full-name "'Project Creator'" --email creator@infra-ansible.rcarrillocruz.net --ssh-key "'{{ gerrit_project_ssh_rsa_pubkey_contents.stdout }}'" openstack-project-creator
+- command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --group Administrators --full-name "'Project Creator'" --email creator@infra-ansible."{{ domainname }}" --ssh-key "'{{ gerrit_project_ssh_rsa_pubkey_contents.stdout }}'" openstack-project-creator
 
-- command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --group "'Non-Interactive Users'" --full-name "'Zuul'" --email zuul@infra-ansible.rcarrillocruz.net --ssh-key "'{{ zuul_ssh_public_key_contents.stdout }}'" jenkins
+- command: ssh -p 29418 -o StrictHostKeyChecking=no "{{ gerrit_prompt_var.user_input }}"@localhost gerrit create-account --group "'Continuous Integration Tools'" --group "'Non-Interactive Users'" --full-name "'Zuul'" --email zuul@infra-ansible."{{ domainname }}" --ssh-key "'{{ zuul_ssh_public_key_contents.stdout }}'" jenkins
