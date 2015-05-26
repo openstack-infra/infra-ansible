@@ -2,8 +2,8 @@
 - name: Create OpenStack instances
   os_server:
     state: present
-    cloud: openstack
-    name: "{{ item.name }}"
+    cloud: "{{os_client_config_cloud}}"
+    name: "{{ item.name }}.{{ domainname }}"
     region_name: region-b.geo-1
     availability_zone: az2
     image: "{{ item.image }}"
