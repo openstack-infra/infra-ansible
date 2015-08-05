@@ -4,8 +4,6 @@
     state: present
     cloud: "{{os_client_config_cloud}}"
     name: "{{ item.name }}.{{ domainname }}"
-    region_name: region-b.geo-1
-    availability_zone: az2
     image: "{{ item.image }}"
     key_name: "{{ key_name }}"
     timeout: 200
