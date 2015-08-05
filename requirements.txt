@@ -1,3 +1,4 @@
 shade
 shade-ansible
 jinja2
+docker-py

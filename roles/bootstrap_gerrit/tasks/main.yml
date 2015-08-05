@@ -8,6 +8,8 @@
 
 - apt: name=python-mysqldb state=present
 
+- apt: name=haveged state=present
+
 - mysql_db: name=reviewdb state=present
 
 - service: name=mysql state=running enabled=yes

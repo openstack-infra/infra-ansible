@@ -2,12 +2,6 @@
 # file: site.yml
 - include: common.yml
 - include: set_hostnames.yml
-- include: deploy_system_config.yml
-- include: deploy_hiera.yml
 - include: bootstrap_puppetmaster.yml
+- include: bootstrap_gerrit.yml
 - include: bootstrap_puppet_infra_nodes.yml
-- include: sign_infra_nodes_certs.yml
-- include: pre_puppet_gerrit.yml
-- include: run_puppet_infra_nodes.yml
-- include: post_puppet_gerrit.yml
-- include: post_puppet_jenkins.yml

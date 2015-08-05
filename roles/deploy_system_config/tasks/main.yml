@@ -1,5 +1,0 @@
----
-- include: create_temp_folder.yml
-- include: clone_system_config_locally.yml
-- include: generate_site_pp.yml
-- include: commit_changes.yml

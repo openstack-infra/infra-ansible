@@ -1,5 +1,0 @@
----
-- command: git commit -a -m "deploy_system_config commit from infra-ansible"
-  args:
-    chdir: /tmp/infra-ansible/system-config/production
-  ignore_errors: True

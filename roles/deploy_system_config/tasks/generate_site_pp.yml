@@ -1,3 +1,0 @@
----
-# Generate site.pp
-- template: src=site.pp.j2 dest=/tmp/infra-ansible/system-config/production/manifests/site.pp

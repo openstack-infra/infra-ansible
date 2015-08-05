@@ -1,22 +1,26 @@
 ---
-# Update packages
-- apt: update_cache=yes 
+- name: Get deb package for Puppetlabs repository
+  get_url: >
+    url=https://apt.puppetlabs.com/puppetlabs-release-{{ansible_distribution_release}}.deb
+    dest=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
 
-# Download install_puppet.sh from system-config
-- get_url: 
-    url=https://git.openstack.org/cgit/openstack-infra/system-config/plain/install_puppet.sh
-    dest=/tmp/install_puppet.sh
+- name: Install Puppetlabs repository deb package
+  apt: deb=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
 
-# Install puppet
-- command: bash -x /tmp/install_puppet.sh
-  tags: install_puppet
+- name: Install Puppet package after updating cache
+  apt: name=puppet update_cache=yes
 
-# Deploy puppet.conf template
-- template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
+- name: Deploy /etc/puppet.conf template
+  template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
 
-# Set puppet service running
-- service: name=puppet enabled=yes state=started
+- name: Start puppet agent service
+  service: name=puppet enabled=yes state=started
 
-# Run puppet agent to request certificate
-- command: puppet agent --test
-  ignore_errors: True
+- name: Enable puppet agent, as it is disabled upon installation
+  command: puppet agent --enable
+
+- name: Install pip from Ubuntu (some classes do not install it properly)
+  apt: name=python-pip
+
+- name: Run puppet agent to apply configuration
+  puppet:

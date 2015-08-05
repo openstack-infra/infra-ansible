@@ -1,4 +1,64 @@
 ---
-- include: rsync_system_config.yml
-- include: install_puppet_and_modules.yml
-- include: configure_puppetmaster.yml
+- name: Install required packages
+  apt: name={{ item }} state=installed
+  with_items:
+    - puppet
+    - puppetmaster-passenger
+    - puppetmaster
+    - python-paramiko
+
+- name: Download install_modules.sh script
+  get_url: >
+    url=https://git.openstack.org/cgit/openstack-infra/system-config/plain/install_modules.sh
+    dest=/tmp/install_modules.sh
+
+- name: Download modules.env file required by install_modules.sh
+  get_url: >
+    url=https://git.openstack.org/cgit/openstack-infra/system-config/plain/modules.env
+    dest=/tmp/modules.env
+
+- name: Run install_modules.sh to install all openstack-infra Puppet modules
+  command: bash /tmp/install_modules.sh
+
+- name: Deploy /etc/puppet.conf template
+  template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
+
+- name: Copy top-level site.pp to /etc/puppet/manifests
+  copy: src=site.pp dest=/etc/puppet/manifests
+
+- name: Create /etc/puppet/hieradata folder
+  file: path=/etc/puppet/hieradata state=directory
+
+- name: Create /etc/puppet/hieradata/production folder
+  file: path=/etc/puppet/hieradata/production state=directory
+
+- name: Create /etc/puppet/hieradata/production/fqdn folder
+  file: path=/etc/puppet/hieradata/production/fqdn state=directory
+
+- name: Copy hiera.yaml to /etc/puppet/
+  copy: src=hiera.yaml dest=/etc/puppet
+
+- name: Run generate_hiera_common.py to populate common.yaml
+  script: generate_hiera_common.py
+
+- name: Deploy Gerrit server template for hiera
+  template: >
+    src=gerrit.yaml.j2 
+    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_gerrit'][0] }}.yaml
+
+- name: Deploy Zuul server template for hiera
+  template: >
+    src=zuul.yaml.j2 
+    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_zuul'][0] }}.yaml
+
+- name: Start puppet agent service
+  service: name=puppet enabled=yes state=started
+
+- name: Start puppet agent
+  service: name=puppetmaster enabled=yes state=started
+
+- name: Enable puppet agent, as it is disabled upon installation
+  command: puppet agent --enable
+
+- name: Run puppet agent to apply configuration
+  puppet:

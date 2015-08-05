@@ -1,6 +1,0 @@
----
-- file: path=/opt/system-config state=directory
-
-# Synchronize system-config from local to dest machine
-- synchronize: src=/tmp/infra-ansible/system-config/production dest=/opt/system-config/
-  tags: rsync_system_config

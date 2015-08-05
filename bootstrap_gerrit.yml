@@ -1,8 +1,8 @@
 ---
-# file: pre_puppet_gerrit.yml
+# file: boostrap_gerrit.yml
 - hosts: meta-infra_type_gerrit
   gather_facts: no
   user: ubuntu
   sudo: true
   roles:
-    - { role: pre_puppet_gerrit }
+    - { role: bootstrap_gerrit }

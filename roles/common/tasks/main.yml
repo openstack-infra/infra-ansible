@@ -1,6 +1,6 @@
 ---
-# Update packages
-- apt: update_cache=yes
+- name: Update packages 
+  apt: update_cache=yes
 
-# Install git
-- apt: name=git
+- name: Install git package
+  apt: name=git
