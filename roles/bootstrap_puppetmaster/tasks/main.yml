@@ -51,6 +51,11 @@
     src=zuul.yaml.j2 
     dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_zuul'][0] }}.yaml
 
+- name: Deploy Jenkins master server template for hiera
+  template: >
+    src=jenkins.yaml.j2 
+    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_jenkins'][0] }}.yaml
+
 - name: Start puppet agent service
   service: name=puppet enabled=yes state=started
 
