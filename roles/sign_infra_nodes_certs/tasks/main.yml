@@ -1,4 +1,0 @@
----
-- command: puppet cert sign {{ item }} creates=/var/lib/puppet/ssl/ca/signed/{{ item }}.pem
-  when: item != inventory_hostname
-  with_items: groups['infra']
