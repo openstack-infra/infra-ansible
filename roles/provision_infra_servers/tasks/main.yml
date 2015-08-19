@@ -2,7 +2,7 @@
 - name: Create OpenStack instances
   os_server:
     state: present
-    cloud: "{{os_client_config_cloud}}"
+    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
     name: "{{ item.name }}.{{ domainname }}"
     image: "{{ item.image }}"
     key_name: "{{ key_name }}"
