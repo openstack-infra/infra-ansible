@@ -5,3 +5,4 @@
 - include: bootstrap_puppetmaster.yml
 - include: bootstrap_gerrit.yml
 - include: bootstrap_puppet_infra_nodes.yml
+- include: bootstrap_jjb.yml

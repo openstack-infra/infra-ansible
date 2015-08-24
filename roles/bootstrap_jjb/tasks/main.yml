@@ -1,0 +1,22 @@
+---
+- name: Get JJB password from Puppetmaster Hiera
+  command: hiera -c /etc/puppet/hiera.yaml jenkins_jobs_password environment=production
+  delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
+  register: jenkins_jobs_password
+  no_log: True
+
+- name: Download Jenkins CLI to /tmp
+  get_url: url=http://localhost:8080/jnlpJars/jenkins-cli.jar dest=/tmp/jenkins-cli.jar
+  register: result
+  until: result|success
+  retries: 5
+  delay: 10
+
+- name: Run Groovy script on Jenkins CLI to create JJB user and set password
+  shell: echo 'hpsr=new hudson.security.HudsonPrivateSecurityRealm(false); hpsr.createAccount("gerrig", "{{ jenkins_jobs_password }}")' | java -jar /tmp/jenkins-cli.jar -s http://localhost:8080 groovy =
+  no_log: True
+
+- name: Trigger 'jenkins-jobs update' to populate Jenkins jobs
+  command: jenkins-jobs update /etc/jenkins_jobs/config --delete-old
+  async: 3600
+  poll: 0
