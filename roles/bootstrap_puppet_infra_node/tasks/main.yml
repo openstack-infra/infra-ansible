@@ -19,8 +19,5 @@
 - name: Enable puppet agent, as it is disabled upon installation
   command: puppet agent --enable
 
-- name: Install pip from Ubuntu (some classes do not install it properly)
-  apt: name=python-pip
-
 - name: Run puppet agent to apply configuration
   puppet:

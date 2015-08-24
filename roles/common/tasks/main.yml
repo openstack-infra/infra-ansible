@@ -3,4 +3,7 @@
   apt: update_cache=yes
 
 - name: Install git package
-  apt: name=git
+  apt: name={{ item }} state=installed
+  with_items:
+    - git
+    - python-pip
