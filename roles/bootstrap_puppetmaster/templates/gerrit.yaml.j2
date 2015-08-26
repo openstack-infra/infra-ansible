@@ -1,8 +1,0 @@
----
-classes:
-  - gerrit
-
-gerrit::mysql_password: "%{hiera('gerrit_mysql_password')}"
-gerrit::gerrit_auth_type: DEVELOPMENT_BECOME_ANY_ACCOUNT
-gerrit::war: http://tarballs.openstack.org/ci/gerrit/gerrit-v2.10.2.23.039a170.war
-gerrit::secondary_index: true

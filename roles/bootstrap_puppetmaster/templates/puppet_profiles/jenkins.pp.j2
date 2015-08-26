@@ -1,0 +1,18 @@
+class infra-ansible::profiles::jenkins {
+  class { '::project_config':
+    url => 'git://git.openstack.org/openstack-infra/project-config'
+  }
+
+  class { 'jenkins::job_builder':
+    url        => 'http://localhost:8080',
+    username   => 'gerrig',
+    password   => hiera('jenkins_jobs_password'),
+    config_dir => $::project_config::jenkins_job_builder_config_dir,
+    require    => $::project_config::config_dir
+  }
+
+  class { 'jenkins::master':
+    jenkins_ssh_private_key => hiera('jenkins_ssh_private_key'),
+    jenkins_ssh_public_key  => hiera('jenkins_ssh_public_key'),
+  }
+}

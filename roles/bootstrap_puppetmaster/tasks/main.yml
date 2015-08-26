@@ -32,28 +32,67 @@
 - name: Create /etc/puppet/hieradata/production folder
   file: path=/etc/puppet/hieradata/production state=directory
 
-- name: Create /etc/puppet/hieradata/production/fqdn folder
-  file: path=/etc/puppet/hieradata/production/fqdn state=directory
-
 - name: Copy hiera.yaml to /etc/puppet/
-  copy: src=hiera.yaml dest=/etc/puppet
+  copy: src=hiera/hiera.yaml dest=/etc/puppet
 
 - name: Run generate_hiera_common.py to populate common.yaml
   script: generate_hiera_common.py
 
-- name: Deploy Gerrit server template for hiera
+- name: Create /etc/puppet/hieradata/production/fqdn folder
+  file: path=/etc/puppet/hieradata/production/fqdn state=directory
+
+- name: Create infra-ansible modules folder for roles and profiles
+  file: path=/etc/puppet/modules/infra-ansible/manifests state=directory
+
+- name: Create infra-ansible roles folder
+  file: path=/etc/puppet/modules/infra-ansible/manifests/roles state=directory
+
+- name: Create infra-ansible profiles folder
+  file: path=/etc/puppet/modules/infra-ansible/manifests/profiles state=directory
+
+- name: Deploy Gerrit puppet role module
   template: >
-    src=gerrit.yaml.j2 
+    src=puppet_roles/gerrit.pp.j2
+    dest=/etc/puppet/modules/infra-ansible/manifests/roles/gerrit.pp
+
+- name: Deploy Zuul puppet role module
+  template: >
+    src=puppet_roles/zuul.pp.j2
+    dest=/etc/puppet/modules/infra-ansible/manifests/roles/zuul.pp
+
+- name: Deploy Jenkins puppet role module
+  template: >
+    src=puppet_roles/jenkins.pp.j2
+    dest=/etc/puppet/modules/infra-ansible/manifests/roles/jenkins.pp
+
+- name: Deploy Gerrit puppet profile template
+  template: >
+    src=puppet_profiles/gerrit.pp.j2
+    dest=/etc/puppet/modules/infra-ansible/manifests/profiles/gerrit.pp
+
+- name: Deploy Zuul puppet profile template
+  template: >
+    src=puppet_profiles/zuul.pp.j2
+    dest=/etc/puppet/modules/infra-ansible/manifests/profiles/zuul.pp
+
+- name: Deploy Jenkins puppet profile template
+  template: >
+    src=puppet_profiles/jenkins.pp.j2
+    dest=/etc/puppet/modules/infra-ansible/manifests/profiles/jenkins.pp
+
+- name: Deploy Gerrit fqdn hiera file
+  copy: >
+    src=hiera/fqdn/gerrit.yaml
     dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_gerrit'][0] }}.yaml
 
-- name: Deploy Zuul server template for hiera
-  template: >
-    src=zuul.yaml.j2 
+- name: Deploy Zuul fqdn hiera file
+  copy: >
+    src=hiera/fqdn/zuul.yaml
     dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_zuul'][0] }}.yaml
 
-- name: Deploy Jenkins master server template for hiera
-  template: >
-    src=jenkins.yaml.j2 
+- name: Deploy Jenkins fqdn hiera file
+  copy: >
+    src=hiera/fqdn/jenkins.yaml
     dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_jenkins'][0] }}.yaml
 
 - name: Start puppet agent service
