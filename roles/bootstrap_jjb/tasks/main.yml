@@ -1,4 +1,7 @@
 ---
+- name: Run puppet agent to install Jenkins
+  puppet:
+
 - name: Get JJB password from Puppetmaster Hiera
   command: hiera -c /etc/puppet/hiera.yaml jenkins_jobs_password environment=production
   delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
@@ -18,5 +21,3 @@
 
 - name: Trigger 'jenkins-jobs update' to populate Jenkins jobs
   command: jenkins-jobs update /etc/jenkins_jobs/config --delete-old
-  async: 3600
-  poll: 0
