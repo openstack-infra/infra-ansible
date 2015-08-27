@@ -1,15 +1,4 @@
 ---
-- name: Get deb package for Puppetlabs repository
-  get_url: >
-    url=https://apt.puppetlabs.com/puppetlabs-release-{{ansible_distribution_release}}.deb
-    dest=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
-
-- name: Install Puppetlabs repository deb package
-  apt: deb=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
-
-- name: Install Puppet package after updating cache
-  apt: name=puppet update_cache=yes
-
 - name: Deploy /etc/puppet.conf template
   template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
 
@@ -18,6 +7,3 @@
 
 - name: Enable puppet agent, as it is disabled upon installation
   command: puppet agent --enable
-
-- name: Run puppet agent to apply configuration
-  puppet:
