@@ -1,18 +1,23 @@
 ---
-- command: hiera -c /etc/puppet/hiera.yaml gerrit_mysql_password environment=production
+- name: Fetch Gerrit MySQL password from Puppetmaster hiera
+  command: hiera -c /etc/puppet/hiera.yaml gerrit_mysql_password environment=production
   delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
   register: gerrit_mysql_password
   no_log: True
 
-- apt: name=mysql-server state=present
+- name: Install Gerrit required packages
+  apt: name={{ item }} state=installed
+  with_items:
+    - mysql-server
+    - python-mysqldb
+    - haveged
 
-- apt: name=python-mysqldb state=present
+- name: Create Gerrit database
+  mysql_db: name=reviewdb state=present
 
-- apt: name=haveged state=present
+- name: Start and enable MySQL service
+  service: name=mysql state=running enabled=yes
 
-- mysql_db: name=reviewdb state=present
-
-- service: name=mysql state=running enabled=yes
-
-- mysql_user: user=gerrit2 password="{{ gerrit_mysql_password.stdout }}" priv=*.*:ALL,GRANT state=present
+- name: Create Gerrit MySQL user and grant privileges
+  mysql_user: user=gerrit2 password="{{ gerrit_mysql_password.stdout }}" priv=*.*:ALL,GRANT state=present
   no_log: True
