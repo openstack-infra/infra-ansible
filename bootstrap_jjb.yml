@@ -1,5 +1,4 @@
 ---
-# file: boostrap_gerrit.yml
 - hosts: meta-infra_type_jenkins
   gather_facts: no
   user: ubuntu
