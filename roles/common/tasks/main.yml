@@ -7,7 +7,7 @@
 - name: Install Puppetlabs repository deb package
   apt: deb=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
 
-- name: Update packages 
+- name: Update packages
   apt: update_cache=yes
 
 - name: Install Puppet and other required packages

@@ -12,7 +12,7 @@
       - net-name: "{{ item.net_name }}"
     security_groups: "{{ item.security_groups }}"
     auto_floating_ip: yes
-    meta: 
+    meta:
       group: infra
       infra_type: "{{ item.infra_type }}"
   with_items: infra_servers
