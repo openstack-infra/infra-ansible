@@ -16,3 +16,13 @@
       group: infra
       infra_type: "{{ item.infra_type }}"
   with_items: infra_servers
+
+- name: Create OpenStack volumes
+  os_volume:
+    state: present
+    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    display_name: "{{ item.1.name }}"
+    size: "{{ item.1.size }}"
+  with_subelements:
+    - infra_servers
+    - volumes

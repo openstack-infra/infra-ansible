@@ -28,6 +28,11 @@ infra_servers:
     net_name: your_neutron_network
     security_groups: "default,webserver"
     infra_type: gerrit
+    volumes:
+      - name: gerrit_volume
+        size: 40
+      - name: gerrit_volume2
+        size: 60
   - name: nodepool
     image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633
     flavor: standard.small
