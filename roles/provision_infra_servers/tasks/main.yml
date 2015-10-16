@@ -26,3 +26,4 @@
   with_subelements:
     - infra_servers
     - volumes
+    - { skip_missing: yes }
