@@ -27,3 +27,14 @@
     - infra_servers
     - volumes
     - { skip_missing: yes }
+
+- name: Attach OpenStack volumes
+  os_server_volume:
+    state: present
+    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    server: "{{ item.0.name }}.{{ domainname }}"
+    volume: "{{ item.1.name }}"
+  with_subelements:
+    - infra_servers
+    - volumes
+    - { skip_missing: yes }
