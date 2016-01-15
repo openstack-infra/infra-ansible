@@ -1,5 +1,4 @@
 -e git+https://github.com/ansible/ansible.git@devel#egg=ansible
 shade
-shade-ansible
 jinja2
 docker-py
