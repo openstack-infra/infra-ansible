@@ -1,5 +1,14 @@
 ---
-- name: Create OpenStack instances
+- name: Create keypairs
+  os_keypair:
+    state: present
+    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    name: "{{ item.name }}"
+    public_key: "{{ item.contents }}"
+    validate_certs: no
+  with_items: keypairs
+
+- name: Create instances
   os_server:
     state: present
     cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
@@ -17,7 +26,7 @@
       infra_type: "{{ item.infra_type }}"
   with_items: infra_servers
 
-- name: Create OpenStack volumes
+- name: Create volumes
   os_volume:
     state: present
     cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
@@ -28,7 +37,7 @@
     - volumes
     - { skip_missing: yes }
 
-- name: Attach OpenStack volumes
+- name: Attach volumes
   os_server_volume:
     state: present
     cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"

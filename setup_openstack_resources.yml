@@ -1,0 +1,6 @@
+---
+# file: setup_openstack_resources.yml
+- hosts: localhost
+  connection: local
+  roles:
+    - { role: setup_openstack_resources }
