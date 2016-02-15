@@ -1,3 +1,4 @@
 infra_config.yml
 openstack.py
 .tox
+*.retry
