@@ -5,7 +5,7 @@
     cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
     name: "{{ item.name }}"
     public_key: "{{ item.contents }}"
-    validate_certs: no
+    validate_certs: "{{ os_validate_certs }}"
   with_items: keypairs
 
 - name: Create instances
@@ -24,6 +24,7 @@
     meta:
       group: infra
       infra_type: "{{ item.infra_type }}"
+    validate_certs: "{{ os_validate_certs }}"
   with_items: infra_servers
 
 - name: Create volumes
@@ -32,6 +33,7 @@
     cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
     display_name: "{{ item.1.name }}"
     size: "{{ item.1.size }}"
+    validate_certs: "{{ os_validate_certs }}"
   with_subelements:
     - infra_servers
     - volumes
@@ -43,6 +45,7 @@
     cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
     server: "{{ item.0.name }}.{{ domainname }}"
     volume: "{{ item.1.name }}"
+    validate_certs: "{{ os_validate_certs }}"
   with_subelements:
     - infra_servers
     - volumes
