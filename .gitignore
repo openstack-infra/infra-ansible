@@ -2,3 +2,4 @@ venv/
 infra_config.yml
 inventory/openstack.py
 .tox
+*.retry
