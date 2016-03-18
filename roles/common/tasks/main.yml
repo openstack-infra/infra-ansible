@@ -1,11 +1,11 @@
 ---
 - name: Get deb package for Puppetlabs repository
   get_url: >
-    url=https://apt.puppetlabs.com/puppetlabs-release-{{ansible_distribution_release}}.deb
-    dest=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
+    url=https://apt.puppetlabs.com/puppetlabs-release-{{ ansible_distribution_release }}.deb
+    dest=/tmp/puppetlabs-release-{{ ansible_distribution_release }}.deb
 
 - name: Install Puppetlabs repository deb package
-  apt: deb=/tmp/puppetlabs-release-{{ansible_distribution_release}}.deb
+  apt: deb=/tmp/puppetlabs-release-{{ ansible_distribution_release }}.deb
 
 - name: Update packages
   apt: update_cache=yes

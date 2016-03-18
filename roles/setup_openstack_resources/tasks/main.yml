@@ -12,7 +12,7 @@
 - name: Create instances
   os_server:
     state: present
-    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    cloud: "{{ item.os_client_config_cloud | default(os_client_config_cloud) }}"
     name: "{{ item.name }}.{{ domainname }}"
     image: "{{ item.image }}"
     key_name: "{{ key_name }}"
@@ -31,7 +31,7 @@
 - name: Create volumes
   os_volume:
     state: present
-    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    cloud: "{{ item.os_client_config_cloud | default(os_client_config_cloud) }}"
     display_name: "{{ item.1.name }}"
     size: "{{ item.1.size }}"
     validate_certs: "{{ os_validate_certs }}"
@@ -43,7 +43,7 @@
 - name: Attach volumes
   os_server_volume:
     state: present
-    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    cloud: "{{ item.os_client_config_cloud | default(os_client_config_cloud) }}"
     server: "{{ item.0.name }}.{{ domainname }}"
     volume: "{{ item.1.name }}"
     validate_certs: "{{ os_validate_certs }}"
