@@ -3,7 +3,6 @@
   user: ubuntu
   gather_facts: no
   sudo: true
-  tasks:
   name: Run Puppet to install Gerrit
   tasks:
     - puppet:
