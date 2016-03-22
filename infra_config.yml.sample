@@ -1,8 +1,11 @@
 ---
 os_client_config_cloud: envvars
 system_config_repo_url: git@your_git_server/system-config.git
-key_name: your_openstack_key
+key_name: your_openstack_key_name
 domainname: yourdomain
+keypairs:
+  - name: my_key_name
+    public_key: my_public_key_content
 infra_servers:
   - name: puppetmaster
     image: 9d25fe2d-cf31-4b05-8c58-f238ec78e633

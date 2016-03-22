@@ -2,9 +2,10 @@
 - name: Create keypairs
   os_keypair:
     state: present
-    cloud: "{{item.os_client_config_cloud | default(os_client_config_cloud) }}"
-    name: "{{ item.name }}"
-    public_key: "{{ item.contents }}"
+    cloud: "{{ item.os_client_config_cloud | default(os_client_config_cloud) }}"
+    name: "{{ item.name | default(key_name) }}"
+    public_key: "{{ item.public_key | default(omit) }}"
+    public_key_file: "{{ item.public_key_file | default(omit) }}"
     validate_certs: "{{ os_validate_certs }}"
   with_items: keypairs
 
