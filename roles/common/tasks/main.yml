@@ -3,6 +3,7 @@
   get_url: >
     url=https://apt.puppetlabs.com/puppetlabs-release-{{ ansible_distribution_release }}.deb
     dest=/tmp/puppetlabs-release-{{ ansible_distribution_release }}.deb
+    validate_certs=no
 
 - name: Install Puppetlabs repository deb package
   apt: deb=/tmp/puppetlabs-release-{{ ansible_distribution_release }}.deb
