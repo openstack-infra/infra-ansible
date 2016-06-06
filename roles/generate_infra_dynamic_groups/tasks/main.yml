@@ -1,0 +1,36 @@
+---
+- name: Get Puppetmaster server name from infra config
+  set_fact: puppetmaster_name={{ services['puppetmaster'][0]['name'] }}
+- name: Get Puppetmaster server UUID from dynamic inventory
+  set_fact: puppetmaster_uuid={{ groups[puppetmaster_name][0] }}
+- name: Get Puppetmaster server IP
+  set_fact: puppetmaster_ip={{ hostvars[puppetmaster_uuid]['openstack']['public_v4'] }}
+- name: Add "{{ puppetmaster_name }}" to infra and puppetmaster groups and set inventory IP
+  add_host: name={{ puppetmaster_name }} ansible_ssh_host={{ puppetmaster_ip }} groups=infra,puppetmaster
+
+- name: Get Gerrit server name from infra config
+  set_fact: gerrit_name={{ services['gerrit'][0]['name'] }}
+- name: Get Gerrit server UUID from dynamic inventory
+  set_fact: gerrit_uuid={{ groups[gerrit_name][0] }}
+- name: Get Gerrit server IP
+  set_fact: gerrit_ip={{ hostvars[gerrit_uuid]['openstack']['public_v4'] }}
+- name: Add "{{ gerrit_name }}" to infra and gerrit groups and set inventory IP
+  add_host: name={{ gerrit_name }} ansible_ssh_host={{ gerrit_ip }} groups=infra,gerrit
+
+- name: Get Zuul server name from infra config
+  set_fact: zuul_name={{ services['zuul'][0]['name'] }}
+- name: Get Zuul server UUID from dynamic inventory
+  set_fact: zuul_uuid={{ groups[zuul_name][0] }}
+- name: Get Zuul server IP
+  set_fact: zuul_ip={{ hostvars[zuul_uuid]['openstack']['public_v4'] }}
+- name: Add "{{ zuul_name }}" to infra and zuul groups and set inventory IP
+  add_host: name={{ zuul_name }} ansible_ssh_host={{ zuul_ip }} groups=infra,zuul
+
+- name: Get Jenkins server name from infra config
+  set_fact: jenkins_name={{ services['jenkins'][0]['name'] }}
+- name: Get Jenkins server UUID from dynamic inventory
+  set_fact: jenkins_uuid={{ groups[jenkins_name][0] }}
+- name: Get Jenkins server IP
+  set_fact: jenkins_ip={{ hostvars[jenkins_uuid]['openstack']['public_v4'] }}
+- name: Add "{{ jenkins_name }}" to infra and jenkins groups and set inventory IP
+  add_host: name={{ jenkins_name }} ansible_ssh_host={{ jenkins_ip }} groups=infra,jenkins

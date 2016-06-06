@@ -1,0 +1,10 @@
+---
+services:
+  puppetmaster:
+    - name: puppetmaster.infra.test
+  gerrit:
+    - name: gerrit.infra.test
+  zuul:
+    - name: zuul.infra.test
+  nodepool:
+    - name: nodepool.infra.test
