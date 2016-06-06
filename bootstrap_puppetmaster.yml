@@ -3,6 +3,6 @@
 - hosts: meta-infra_type_puppetmaster
   gather_facts: no
   user: ubuntu
-  sudo: true
+  become: true
   roles:
     - { role: bootstrap_puppetmaster }

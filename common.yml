@@ -3,6 +3,6 @@
 - hosts: infra
   gather_facts: yes
   user: ubuntu
-  sudo: true
+  become: true
   roles:
     - { role: common }
