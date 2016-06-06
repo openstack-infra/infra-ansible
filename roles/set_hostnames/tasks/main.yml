@@ -1,16 +1,22 @@
 ---
+- name: Get hostname from server name
+  set_fact: server_hostname={{ inventory_hostname.partition('.')[0] }}
+- name: Get server UUID from dynamic inventory
+  set_fact: server_uuid={{ groups[inventory_hostname][0] }}
+- name: Get server IP
+  set_fact: server_ip={{ hostvars[server_uuid]['openstack']['public_v4'] }}
 # Set hostname and /etc/hosts
 # Inspired by:
 # https://github.com/ansible/ansible/pull/8482)
 # https://gist.github.com/rothgar/8793800
 - name: Set /etc/hostname
-  hostname: name="{{ inventory_hostname.split('.', 1)[0] }}"
+  hostname: name="{{ server_hostname }}"
 
 # " lovely lonely double-quote for fixing vim highlighting
 
 - name: Add all infra hosts to /etc/hosts
   lineinfile: dest=/etc/hosts
-              line='{{ hostvars[item]['openstack']['private_v4'] }} {{ item }} {{ item.split('.', 1)[0] }}'
+              line='{{ server_ip }} {{ item }} {{ server_hostname }}'
               insertafter='^127\.0\.0\.1'
               state=present
   with_items: groups['infra']
