@@ -40,6 +40,9 @@ if [[ ! -d inventory ]]; then
     mkdir inventory
 fi
 
+# Install roles dependencies from requirements.yml
+ansible-galaxy install -r requirements.yml
+
 # Install Ansible openstack inventory
 wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py -O inventory/openstack.py
 chmod +x inventory/openstack.py

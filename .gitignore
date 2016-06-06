@@ -1,5 +1,5 @@
 venv/
-infra_config.yml
+resources.yml
 inventory/openstack.py
 .tox
 *.retry

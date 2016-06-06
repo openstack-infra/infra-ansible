@@ -3,4 +3,4 @@
 - hosts: localhost
   connection: local
   roles:
-    - { role: setup_openstack_resources }
+    - { role: cloud_launcher }

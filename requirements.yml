@@ -1,0 +1,3 @@
+- src: git+git://git.openstack.org/openstack/ansible-role-cloud-launcher.git
+  version: HEAD
+  name: cloud_launcher
