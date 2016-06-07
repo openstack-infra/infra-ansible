@@ -19,4 +19,4 @@
               line='{{ server_ip }} {{ item }} {{ server_hostname }}'
               insertafter='^127\.0\.0\.1'
               state=present
-  with_items: groups['infra']
+  with_items: "{{ groups['infra'] }}"
