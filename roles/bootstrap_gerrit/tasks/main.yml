@@ -1,7 +1,7 @@
 ---
 - name: Fetch Gerrit MySQL password from Puppetmaster hiera
   command: hiera -c /etc/puppet/hiera.yaml gerrit_mysql_password environment=production
-  delegate_to: "{{ groups['meta-infra_type_puppetmaster'][0] }}"
+  delegate_to: "{{ groups['puppetmaster'][0] }}"
   register: gerrit_mysql_password
   no_log: True
 

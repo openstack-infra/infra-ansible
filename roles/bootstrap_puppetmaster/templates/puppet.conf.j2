@@ -1,5 +1,5 @@
 [main]
-server={{ groups['meta-infra_type_puppetmaster'][0] }}
+server={{ groups['puppetmaster'][0] }}
 certname={{ inventory_hostname }}
 logdir=/var/log/puppet
 vardir=/var/lib/puppet
