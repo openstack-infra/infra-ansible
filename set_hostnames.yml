@@ -3,6 +3,6 @@
 - hosts: infra
   gather_facts: no
   user: ubuntu
-  sudo: true
+  become: true
   roles:
     - { role: set_hostnames }

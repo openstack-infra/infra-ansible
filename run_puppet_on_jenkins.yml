@@ -1,7 +1,7 @@
 ---
 - hosts: meta-infra_type_jenkins
   user: ubuntu
-  sudo: true
+  become: true
   name: Run Puppet to install Jenkins
   tasks:
     - puppet:

@@ -2,6 +2,6 @@
 # file: bootstrap_puppet_infra_nodes.yml
 - hosts: infra:!meta-infra_type_puppetmaster
   user: ubuntu
-  sudo: true
+  become: true
   roles:
     - { role: bootstrap_puppet_infra_node }
