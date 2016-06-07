@@ -4,7 +4,7 @@ class infra-ansible::profiles::zuul {
   }
 
   class { '::zuul':
-    gerrit_server        => '{{ groups['meta-infra_type_gerrit'][0] }}',
+    gerrit_server        => '{{ groups['gerrit'][0] }}',
     gerrit_user          => 'gerrit',
     zuul_ssh_private_key => hiera('zuul_ssh_private_key_contents'),
     zuul_url             => 'http://{{ groups['meta-infra_type_zuul'][0] }}/p',

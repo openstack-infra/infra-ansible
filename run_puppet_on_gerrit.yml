@@ -1,5 +1,5 @@
 ---
-- hosts: meta-infra_type_gerrit
+- hosts: gerrit
   user: ubuntu
   gather_facts: no
   become: true

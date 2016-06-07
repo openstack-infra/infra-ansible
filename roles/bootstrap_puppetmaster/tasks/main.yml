@@ -81,7 +81,7 @@
 - name: Deploy Gerrit fqdn hiera file
   copy: >
     src=hiera/fqdn/gerrit.yaml
-    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_gerrit'][0] }}.yaml
+    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['gerrit'][0] }}.yaml
 
 - name: Deploy Zuul fqdn hiera file
   copy: >
