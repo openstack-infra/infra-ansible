@@ -1,5 +1,5 @@
 ---
-- hosts: meta-infra_type_jenkins
+- hosts: jenkins
   user: ubuntu
   become: true
   name: Run Puppet to install Jenkins

@@ -1,5 +1,5 @@
 ---
-- hosts: meta-infra_type_jenkins
+- hosts: jenkins
   gather_facts: no
   user: ubuntu
   become: true

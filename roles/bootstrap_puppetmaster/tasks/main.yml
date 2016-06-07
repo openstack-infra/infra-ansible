@@ -91,7 +91,7 @@
 - name: Deploy Jenkins fqdn hiera file
   copy: >
     src=hiera/fqdn/jenkins.yaml
-    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['meta-infra_type_jenkins'][0] }}.yaml
+    dest=/etc/puppet/hieradata/production/fqdn/{{ groups['jenkins'][0] }}.yaml
 
 - name: Start puppet agent service
   service: name=puppet enabled=yes state=started
