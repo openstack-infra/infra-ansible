@@ -1,5 +1,5 @@
 ---
-- hosts: meta-infra_type_zuul
+- hosts: zuul
   user: ubuntu
   gather_facts: no
   become: true
