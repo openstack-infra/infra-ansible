@@ -1,176 +1,51 @@
-profiles:
-  - name: admin-clouds
-    domains:
-      - name: ops
-        description: Ops team domain
-      - name: qa
-        description: QA team domain
-      - name: rnd
-        description: R&D team domain
-    projects:
-      - name: ops
-        domain: ops
-        description: Ops team project
-      - name: qa
-        domain: qa
-        description: QA team project
-      - name: rnd
-        domain: rnd
-        description: RnD team project
-    users:
-      - name: opsadmin
-        password: changeme
-        email: opsadmin@aoclcompany.aocl
-        domain: ops
-        default_project: ops
-      - name: qaadmin
-        password: changeme
-        email: qaadmin@aoclcompany.aocl
-        domain: qa
-        default_project: qa
-      - name: rndadmin
-        password: changeme
-        email: rndadmin@aoclcompany.aocl
-        domain: rnd
-        default_project: rnd
-    flavors:
-      - name: aoclcompany.xlarge
-        ram: 128
-        vcpus: 1
-        disk: 0
-      - name: aoclcompany.large
-        ram: 64
-        vcpus: 1
-        disk: 0
-    images:
-      - name: ubuntu-trusty
-        filename: /home/ubuntu/trusty-server-cloudimg-amd64-disk1.img
-  - name: ops
-    networks:
-      - name: ops-net
-    subnets:
-      - name: ops-subnet
-        network_name: ops-net
-        cidr: 192.168.0.0/24
-        dns_nameservers:
-          - 8.8.8.8
-    routers:
-      - name: ops-router
-        network: public
-        interfaces: ops-subnet
-    security_groups:
-      - name: webserver
-        description: Allow HTTP/HTTPS traffic
-    images:
-      - name: ubuntu-trusty
-        filename: /home/ubuntu/trusty-server-cloudimg-amd64-disk1.img
-    security_groups_rules:
-      - security_group: webserver
-        protocol: tcp
-        port_range_min: 80
-        port_range_max: 80
-        remote_ip_prefix: 0.0.0.0/0
-      - security_group: webserver
-        protocol: tcp
-        port_range_min: 443
-        port_range_max: 443
-        remote_ip_prefix: 0.0.0.0/0
-    servers:
-      - name: nagios
-        image: ubuntu-trusty
-        key_name: bootstrap-key
-        flavor: m1.small
-        security_groups: webserver
-        network: ops-net
-  - name: qa
-    networks:
-      - name: qa-net
-    subnets:
-      - name: qa-subnet
-        network_name: qa-net
-        cidr: 192.168.1.0/24
-        dns_nameservers:
-          - 8.8.8.8
-    routers:
-      - name: qa-router
-        network: public
-        interfaces: qa-subnet
-    security_groups:
-      - name: webserver
-        description: Allow HTTP/HTTPS traffic
-      - name: altwebserver
-        description: Allow 8080 traffic
-    security_groups_rules:
-      - security_group: webserver
-        protocol: tcp
-        port_range_min: 80
-        port_range_max: 80
-        remote_ip_prefix: 0.0.0.0/0
-      - security_group: webserver
-        protocol: tcp
-        port_range_min: 443
-        port_range_max: 443
-        remote_ip_prefix: 0.0.0.0/0
-      - security_group: altwebserver
-        protocol: tcp
-        port_range_min: 8080
-        port_range_max: 8080
-        remote_ip_prefix: 0.0.0.0/0
-    servers:
-      - name: jenkins
-        image: cirros-0.3.4-x86_64-uec
-        key_name: bootstrap-key
-        flavor: m1.tiny
-        security_groups: altwebserver
-        network: qa-net
-  - name: rnd
-    networks:
-      - name: rnd-net
-    subnets:
-      - name: rnd-subnet
-        network_name: rnd-net
-        cidr: 192.168.2.0/24
-        dns_nameservers:
-          - 8.8.8.8
-    routers:
-      - name: rnd-router
-        network: public
-        interfaces: rnd-subnet
-    security_groups:
-      - name: openwide
-        description: Allow all traffic
-    security_groups_rules:
-      - security_group: openwide
-        protocol: tcp
-        remote_ip_prefix: 0.0.0.0/0
-    servers:
-      - name: docker-registry
-        image: cirros-0.3.4-x86_64-uec
-        key_name: bootstrap-key
-        flavor: m1.tiny
-        security_groups: openwide
-        network: rnd-net
-  - name: bootstrap-keypair
-    keypairs:
-      - name: bootstrap-key
-        public_key_file: /home/ubuntu/.ssh/id_rsa.pub
 clouds:
-  - name: awesomecloud
-    profiles:
-      - admin-clouds
-      - bootstrap-keypair
-  - name: yaycloud-ops
-    oscc_cloud: yaycloud-opsuser
-    profiles:
-      - bootstrap-keypair
-      - ops
-  - name: yaycloud-qa
-    oscc_cloud: yaycloud-qauser
-    profiles:
-      - bootstrap-keypair
-      - qa
-  - name: yaycloud-rnd
-    oscc_cloud: yaycloud-rnduser
-    profiles:
-      - bootstrap-keypair
-      - rnd
+  - name: devstack-admin
+    images:
+      - name: ubuntu-trusty
+        filename: /home/ubuntu/trusty-server-cloudimg-amd64-disk1.img
+    security_groups:
+      - name: ssh
+        description: Allow SSH from everywhere
+      - name: puppetmaster
+        description: Allows puppet agents to connect to puppetmaster
+    security_groups_rules:
+      - security_group: ssh
+        protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+        remote_ip_prefix: 0.0.0.0/0
+      - security_group: puppetmaster
+        protocol: tcp
+        port_range_min: 8140
+        port_range_max: 8140
+        remote_ip_prefix: 0.0.0.0/0
+    keypairs:
+      - name: bootstrap_key
+        public_key_file: /home/ubuntu/.ssh/id_rsa.pub
+    servers:
+      - name: puppetmaster.infra.test
+        image: ubuntu-trusty
+        flavor: d1
+        network: private
+        key_name: bootstrap_key
+        security_groups:
+          - ssh
+          - puppetmaster
+      - name: gerrit.infra.test
+        image: ubuntu-trusty
+        flavor: d1
+        network: private
+        key_name: bootstrap_key
+        security_groups: ssh
+      - name: zuul.infra.test
+        image: ubuntu-trusty
+        flavor: d1
+        network: private
+        key_name: bootstrap_key
+        security_groups: ssh
+      - name: jenkins.infra.test
+        image: ubuntu-trusty
+        flavor: d1
+        network: private
+        key_name: bootstrap_key
+        security_groups: ssh
