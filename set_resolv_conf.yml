@@ -1,0 +1,8 @@
+---
+# file: set_resolv_conf.yml
+- hosts: infra
+  gather_facts: no
+  user: ubuntu
+  become: true
+  roles:
+    - { role: set_resolv_conf }
