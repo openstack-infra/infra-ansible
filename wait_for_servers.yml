@@ -1,0 +1,10 @@
+---
+# file: wait_for_servers.yml
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  user: ubuntu
+  become: true
+  tasks:
+    - wait_for: port=22 host="{{ hostvars[item]['ansible_ssh_host'] }}" search_regex=OpenSSH delay=10
+      with_items: "{{ groups['infra'] }}"
