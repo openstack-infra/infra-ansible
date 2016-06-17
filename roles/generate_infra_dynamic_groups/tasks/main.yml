@@ -1,36 +1,52 @@
 ---
-- name: Get Puppetmaster server name from infra config
-  set_fact: puppetmaster_name={{ services['puppetmaster'][0]['name'] }}
-- name: Get Puppetmaster server UUID from dynamic inventory
-  set_fact: puppetmaster_uuid={{ groups[puppetmaster_name][0] }}
-- name: Get Puppetmaster server IP
-  set_fact: puppetmaster_ip={{ hostvars[puppetmaster_uuid]['openstack']['public_v4'] }}
-- name: Add "{{ puppetmaster_name }}" to infra and puppetmaster groups and set inventory IP
-  add_host: name={{ puppetmaster_name }} ansible_ssh_host={{ puppetmaster_ip }} groups=infra,puppetmaster
+- name: Get Puppetmaster service definition from infra config
+  set_fact: puppetmaster_service={{ services | selectattr('name', 'equalto', 'puppetmaster') | list }}
+- block:
+    - name: Get Puppetmaster server name
+      set_fact: puppetmaster_name={{ puppetmaster_service[0]['hosts'][0] }}
+    - name: Get Puppetmaster server UUID from dynamic inventory
+      set_fact: puppetmaster_uuid={{ groups[puppetmaster_name][0] }}
+    - name: Get Puppetmaster server IP
+      set_fact: puppetmaster_ip={{ hostvars[puppetmaster_uuid]['openstack']['public_v4'] }}
+    - name: Add "{{ puppetmaster_name }}" to infra and puppetmaster group and set inventory IP
+      add_host: name={{ puppetmaster_name }} ansible_ssh_host={{ puppetmaster_ip }} groups=infra,puppetmaster
+  when: puppetmaster_service
 
-- name: Get Gerrit server name from infra config
-  set_fact: gerrit_name={{ services['gerrit'][0]['name'] }}
-- name: Get Gerrit server UUID from dynamic inventory
-  set_fact: gerrit_uuid={{ groups[gerrit_name][0] }}
-- name: Get Gerrit server IP
-  set_fact: gerrit_ip={{ hostvars[gerrit_uuid]['openstack']['public_v4'] }}
-- name: Add "{{ gerrit_name }}" to infra and gerrit groups and set inventory IP
-  add_host: name={{ gerrit_name }} ansible_ssh_host={{ gerrit_ip }} groups=infra,gerrit
+- name: Get Gerrit service definition from infra config
+  set_fact: gerrit_service={{ services | selectattr('name', 'equalto', 'gerrit') | list }}
+- block:
+    - name: Get Gerrit server name from infra config
+      set_fact: gerrit_name={{ gerrit_service[0]['hosts'][0] }}
+    - name: Get Gerrit server UUID from dynamic inventory
+      set_fact: gerrit_uuid={{ groups[gerrit_name][0] }}
+    - name: Get Gerrit server IP
+      set_fact: gerrit_ip={{ hostvars[gerrit_uuid]['openstack']['public_v4'] }}
+    - name: Add "{{ gerrit_name }}" to infra and gerrit groups and set inventory IP
+      add_host: name={{ gerrit_name }} ansible_ssh_host={{ gerrit_ip }} groups=infra,gerrit
+  when: gerrit_service
 
-- name: Get Zuul server name from infra config
-  set_fact: zuul_name={{ services['zuul'][0]['name'] }}
-- name: Get Zuul server UUID from dynamic inventory
-  set_fact: zuul_uuid={{ groups[zuul_name][0] }}
-- name: Get Zuul server IP
-  set_fact: zuul_ip={{ hostvars[zuul_uuid]['openstack']['public_v4'] }}
-- name: Add "{{ zuul_name }}" to infra and zuul groups and set inventory IP
-  add_host: name={{ zuul_name }} ansible_ssh_host={{ zuul_ip }} groups=infra,zuul
+- name: Get Zuul service definition from infra config
+  set_fact: zuul_service={{ services | selectattr('name', 'equalto', 'zuul') | list }}
+- block:
+    - name: Get Zuul server name from infra config
+      set_fact: zuul_name={{ zuul_service[0]['hosts'][0] }}
+    - name: Get Zuul server UUID from dynamic inventory
+      set_fact: zuul_uuid={{ groups[zuul_name][0] }}
+    - name: Get Zuul server IP
+      set_fact: zuul_ip={{ hostvars[zuul_uuid]['openstack']['public_v4'] }}
+    - name: Add "{{ zuul_name }}" to infra and zuul groups and set inventory IP
+      add_host: name={{ zuul_name }} ansible_ssh_host={{ zuul_ip }} groups=infra,zuul
+  when: zuul_service
 
-- name: Get Jenkins server name from infra config
-  set_fact: jenkins_name={{ services['jenkins'][0]['name'] }}
-- name: Get Jenkins server UUID from dynamic inventory
-  set_fact: jenkins_uuid={{ groups[jenkins_name][0] }}
-- name: Get Jenkins server IP
-  set_fact: jenkins_ip={{ hostvars[jenkins_uuid]['openstack']['public_v4'] }}
-- name: Add "{{ jenkins_name }}" to infra and jenkins groups and set inventory IP
-  add_host: name={{ jenkins_name }} ansible_ssh_host={{ jenkins_ip }} groups=infra,jenkins
+- name: Get Jenkins service definition from infra config
+  set_fact: jenkins_service={{ services | selectattr('name', 'equalto', 'jenkins') | list }}
+- block:
+    - name: Get Jenkins server name from infra config
+      set_fact: jenkins_name={{ jenkins_service[0]['hosts'][0] }}
+    - name: Get Jenkins server UUID from dynamic inventory
+      set_fact: jenkins_uuid={{ groups[jenkins_name][0] }}
+    - name: Get Jenkins server IP
+      set_fact: jenkins_ip={{ hostvars[jenkins_uuid]['openstack']['public_v4'] }}
+    - name: Add "{{ jenkins_name }}" to infra and jenkins groups and set inventory IP
+      add_host: name={{ jenkins_name }} ansible_ssh_host={{ jenkins_ip }} groups=infra,jenkins
+  when: jenkins_service
