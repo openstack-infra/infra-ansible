@@ -2,9 +2,9 @@
 # file: site.yml
 - include: generate_infra_dynamic_groups.yml
 - include: wait_for_servers.yml
+- include: set_hostnames.yml
 - include: set_resolv_conf.yml
 - include: common.yml
-- include: set_hostnames.yml
 - include: bootstrap_puppetmaster.yml
 - include: bootstrap_puppet_infra_nodes.yml
 - include: bootstrap_gerrit.yml
