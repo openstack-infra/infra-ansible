@@ -1,0 +1,13 @@
+- job:
+    name: infra-ansible-tox-ansible-syntax-check
+    parent: tox
+    vars:
+      tox_envlist: ansible-syntax-check
+
+- project:
+    check:
+      jobs:
+        - infra-ansible-tox-ansible-syntax-check
+    gate:
+      jobs:
+        - infra-ansible-tox-ansible-syntax-check
