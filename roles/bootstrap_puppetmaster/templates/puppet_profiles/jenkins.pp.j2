@@ -1,6 +1,6 @@
 class infra-ansible::profiles::jenkins {
   class { '::project_config':
-    url => 'git://git.openstack.org/openstack-infra/project-config'
+    url => 'https://git.openstack.org/openstack-infra/project-config'
   }
 
   class { 'jenkins::job_builder':
