@@ -1,9 +1,0 @@
----
-- name: Deploy /etc/puppet.conf template
-  template: src=puppet.conf.j2 dest=/etc/puppet/puppet.conf
-
-- name: Start puppet agent service
-  service: name=puppet enabled=yes state=started
-
-- name: Enable puppet agent, as it is disabled upon installation
-  command: puppet agent --enable

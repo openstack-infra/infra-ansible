@@ -1,7 +1,0 @@
----
-# file: bootstrap_puppet_infra_nodes.yml
-- hosts: infra:!puppetmaster
-  user: ubuntu
-  become: true
-  roles:
-    - { role: bootstrap_puppet_infra_node }

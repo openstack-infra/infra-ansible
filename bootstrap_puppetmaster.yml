@@ -1,8 +1,0 @@
----
-# file: bootstrap_puppetmaster.yml
-- hosts: puppetmaster
-  gather_facts: no
-  user: ubuntu
-  become: true
-  roles:
-    - { role: bootstrap_puppetmaster }

@@ -1,3 +1,0 @@
-localhost ansible_python_interpreter="/usr/bin/env python"
-[local]
-127.0.0.1

@@ -1,7 +1,0 @@
----
-- hosts: jenkins
-  user: ubuntu
-  become: true
-  name: Run Puppet to install Jenkins
-  tasks:
-    - puppet:

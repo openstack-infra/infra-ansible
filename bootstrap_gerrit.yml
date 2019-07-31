@@ -1,8 +1,0 @@
----
-# file: boostrap_gerrit.yml
-- hosts: gerrit
-  gather_facts: no
-  user: ubuntu
-  become: true
-  roles:
-    - { role: bootstrap_gerrit }

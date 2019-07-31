@@ -1,7 +1,0 @@
----
-- hosts: jenkins
-  gather_facts: no
-  user: ubuntu
-  become: true
-  roles:
-    - { role: bootstrap_jjb }

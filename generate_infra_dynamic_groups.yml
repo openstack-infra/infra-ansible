@@ -1,6 +1,0 @@
----
-# file: generate_infra_dynamic_groups.yml
-- hosts: localhost
-  connection: local
-  roles:
-    - { role: generate_infra_dynamic_groups }

@@ -1,7 +1,0 @@
-127.0.0.1 localhost
-{% for host in groups['infra'] %}
-{% set server_hostname = host.partition('.')[0] %}
-{% set server_uuid = groups[host][0] %}
-{% set server_ip = hostvars[server_uuid]['openstack']['public_v4'] %}
-{{ server_ip }} {{ host }} {{ server_hostname }}
-{% endfor %}

@@ -1,8 +1,0 @@
----
-# file: set_hostnames.yml
-- hosts: infra
-  gather_facts: no
-  user: ubuntu
-  become: true
-  roles:
-    - { role: set_hostnames }

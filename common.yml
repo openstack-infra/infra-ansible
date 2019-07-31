@@ -1,8 +1,0 @@
----
-# file: common.yml
-- hosts: infra
-  gather_facts: yes
-  user: ubuntu
-  become: true
-  roles:
-    - { role: common }
